@@ -1,4 +1,4 @@
-name: Flight Tracker Bot
+name: Rome Flight Monitor
 
 on:
   schedule:
@@ -6,12 +6,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-bot:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Python
@@ -22,16 +23,16 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Run flight check
+      - name: Run flight checker
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
         run: python check_flights.py
 
-      - name: Commit and Push changes
+      - name: Save memory (seen_flights.txt)
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git add seen_flights.txt
           git commit -m "Update seen flights [skip ci]" || echo "No changes to commit"
           git push
