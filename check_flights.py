@@ -2,8 +2,8 @@ import requests
 import os
 
 def send_telegram_msg(message):
-    token = os.getenv('TELEGRAM_TOKEN')
-    chat_id = os.getenv('CHAT_ID')
+    token = os.getenv('8294553898:AAGzK4YrXwEbluWVdk1_ZlqbLX8hDh3l9uo')
+    chat_id = os.getenv('733855231')
     if not token or not chat_id:
         print("Missing Telegram credentials!")
         return
